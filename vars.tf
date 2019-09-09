@@ -1,4 +1,3 @@
-variable "project_name" { default = "Demo" }
 variable "project_env" { default = "Production" }
 variable "project_env_short" { default = "prd" }
 

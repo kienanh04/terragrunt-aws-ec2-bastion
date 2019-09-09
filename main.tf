@@ -48,7 +48,7 @@ data "terraform_remote_state" "vpc" {
 locals {
   common_tags = {
     Env  = "${var.project_env}"
-    Name = "${var.project_name}"
+    Name = "${local.name}"
   }
 
   subnet_id = "${var.subnet_id == "" ? data.terraform_remote_state.vpc.public_subnets[0] : var.subnet_id }"
@@ -56,7 +56,7 @@ locals {
   ami       = "${var.ami == "" ? data.aws_ami.amazon2.id : var.ami }"
   name      = "${lower(var.project_env_short)}-${lower(var.name)}"
 
-  dns_private_name_temp = "${var.namespace == "" ? "" : "${lower(var.namespace)}-"}${lower(var.project_env_short)}-${lower(var.project_name)}-${lower(var.name)}.${var.domain_local}"
+  dns_private_name_temp = "${var.namespace == "" ? "" : "${lower(var.namespace)}-"}${lower(local.name)}.${var.domain_local}"
   dns_private_name      = "${var.dns_private_name == "" ? local.dns_private_name_temp : var.dns_private_name}"
 }
 
