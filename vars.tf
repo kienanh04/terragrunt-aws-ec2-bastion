@@ -15,6 +15,7 @@ variable "tfstate_arn" { default = "" }
 variable "tfstate_key_vpc" { default = "demo/vpc/terraform.tfstate" }
 
 variable "name" { default = "ec2" }
+variable "customized_name" { default = "" }
 variable "namespace" { default = "" }
 variable "source_ec2_sg_tags" { default = { Type = "WebApp" } }
 variable "instance_size" { default = "1" }

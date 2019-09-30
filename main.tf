@@ -54,7 +54,7 @@ locals {
   subnet_id = "${var.subnet_id == "" ? data.terraform_remote_state.vpc.public_subnets[0] : var.subnet_id }"
   key_name  = "${var.key_name == "" ? data.terraform_remote_state.vpc.key_name : var.key_name }"
   ami       = "${var.ami == "" ? data.aws_ami.amazon2.id : var.ami }"
-  name      = "${lower(var.project_env_short)}-${lower(var.name)}"
+  name      = "${var.customized_name == "" ? "${lower(var.project_env_short)}-${lower(var.name)}" : var.customized_name }"
 
   dns_private_name_temp = "${var.namespace == "" ? "" : "${lower(var.namespace)}-"}${lower(local.name)}.${var.domain_local}"
   dns_private_name      = "${var.dns_private_name == "" ? local.dns_private_name_temp : var.dns_private_name}"
