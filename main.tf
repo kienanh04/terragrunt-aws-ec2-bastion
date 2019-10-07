@@ -55,6 +55,7 @@ locals {
   key_name  = "${var.key_name == "" ? data.terraform_remote_state.vpc.key_name : var.key_name }"
   ami       = "${var.ami == "" ? data.aws_ami.amazon2.id : var.ami }"
   name      = "${var.customized_name == "" ? "${lower(var.project_env_short)}-${lower(var.name)}" : var.customized_name }"
+  namespace = "${var.customized_name == "" ? var.namespace : "" }"
 
   dns_private_name_temp = "${var.namespace == "" ? "" : "${lower(var.namespace)}-"}${lower(local.name)}.${var.domain_local}"
   dns_private_name      = "${var.dns_private_name == "" ? local.dns_private_name_temp : var.dns_private_name}"
@@ -70,7 +71,7 @@ module "ec2" {
 
   ami           = "${local.ami}"
   name          = "${local.name}"
-  namespace     = "${var.namespace}"
+  namespace     = "${local.namespace}"
   instance_type = "${var.instance_type}"
   project_env   = "${var.project_env}"
 
