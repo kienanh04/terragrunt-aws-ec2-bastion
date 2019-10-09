@@ -58,6 +58,7 @@ locals {
   namespace = "${var.customized_name == "" ? var.namespace : "" }"
 
   dns_private_name_temp = "${var.namespace == "" ? "" : "${lower(var.namespace)}-"}${lower(local.name)}.${var.domain_local}"
+h
   dns_private_name      = "${var.dns_private_name == "" ? local.dns_private_name_temp : var.dns_private_name}"
 }
 
@@ -90,9 +91,15 @@ module "ec2" {
 }
 
 ## DNS local:
+data "aws_route53_zone" "private" {
+  count        = "${var.dns_private ? 1 : 0}"
+  name         = "${var.domain_local}"
+  private_zone = true
+}
+
 resource "aws_route53_record" "ec2" {
   count   = "${var.dns_private ? 1 : 0}"
-  zone_id = "${data.terraform_remote_state.vpc.private_zone_id}"
+  zone_id = "${element(concat(data.aws_route53_zone.private.*.id,list("")),0)}"
   name    = "${local.dns_private_name}"
   type    = "A"
   ttl     = "60"
