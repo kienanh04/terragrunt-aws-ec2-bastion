@@ -58,7 +58,7 @@ locals {
   namespace = "${var.customized_name == "" ? var.namespace : "" }"
 
   dns_private_name_temp = "${var.namespace == "" ? "" : "${lower(var.namespace)}-"}${lower(local.name)}.${var.domain_local}"
-  dns_private_name      = "${var.dns_private_name == "" ? local.dns_private_name_temp : var.dns_private_name}"
+  dns_private_name      = "${var.dns_private_name == "" ? local.dns_private_name_temp : "${var.dns_private_name}.${var.domain_local}"}"
 }
 
 data "aws_security_group" "ec2" {
