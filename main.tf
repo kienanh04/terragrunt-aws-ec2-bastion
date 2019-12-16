@@ -61,13 +61,13 @@ locals {
   dns_private_name      = "${var.dns_private_name == "" ? local.dns_private_name_temp : "${var.dns_private_name}.${var.domain_local}"}"
 }
 
-data "aws_security_group" "ec2" {
+data "aws_security_groups" "ec2" {
   tags = "${merge(var.source_ec2_sg_tags, map("Env", "${var.project_env}"))}"
 }
 
 module "ec2" {
   source  = "thanhbn87/ec2-bastion/aws"
-  version = "0.1.3"
+  version = "0.1.5"
 
   ami           = "${local.ami}"
   name          = "${local.name}"
@@ -82,10 +82,11 @@ module "ec2" {
   key_name               = "${local.key_name}"
   subnet_id              = "${local.subnet_id}"
   iam_instance_profile   = "${var.iam_instance_profile}"
-  vpc_security_group_ids = ["${data.aws_security_group.ec2.id}"]
+  vpc_security_group_ids = ["${data.aws_security_groups.ec2.ids}"]
 
-  protect_termination = "${var.protect_termination}"
   tags                = "${var.tags}"
+  user_data           = "${var.user_data}"
+  protect_termination = "${var.protect_termination}"
   
 }
 
@@ -102,5 +103,5 @@ resource "aws_route53_record" "ec2" {
   name    = "${local.dns_private_name}"
   type    = "A"
   ttl     = "60"
-  records = ["${module.ec2.bastion_eip_private}"]
+  records = ["${module.ec2.private_ip}"]
 }
