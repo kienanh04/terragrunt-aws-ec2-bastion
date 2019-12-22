@@ -63,6 +63,10 @@ locals {
 
 data "aws_security_groups" "ec2" {
   tags = "${merge(var.source_ec2_sg_tags, map("Env", "${var.project_env}"))}"
+  filter {
+    name   = "vpc-id"
+    values = ["${data.terraform_remote_state.vpc.vpc_id}"]
+  }
 }
 
 module "ec2" {
@@ -82,7 +86,7 @@ module "ec2" {
   key_name               = "${local.key_name}"
   subnet_id              = "${local.subnet_id}"
   iam_instance_profile   = "${var.iam_instance_profile}"
-  vpc_security_group_ids = ["${data.aws_security_groups.ec2.ids}"]
+  vpc_security_group_ids = "${data.aws_security_groups.ec2.ids}"
 
   tags                = "${var.tags}"
   user_data           = "${var.user_data}"
