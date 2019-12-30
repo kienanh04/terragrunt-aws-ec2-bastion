@@ -51,7 +51,7 @@ locals {
     Name = "${local.name}"
   }
 
-  subnet_id = "${var.subnet_id == "" ? data.terraform_remote_state.vpc.public_subnets[0] : var.subnet_id }"
+  subnet_id = "${coalesce(var.subnet_id,data.terraform_remote_state.vpc.public_subnets["${var.subnet_number}"])}"
   key_name  = "${var.key_name == "" ? data.terraform_remote_state.vpc.key_name : var.key_name }"
   ami       = "${var.ami == "" ? data.aws_ami.amazon2.id : var.ami }"
   name      = "${var.customized_name == "" ? "${lower(var.project_env_short)}-${lower(var.name)}" : var.customized_name }"

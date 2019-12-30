@@ -32,7 +32,12 @@ variable "user_data" {
   description = "The user data to provide when launching the instance"
   default     = " "
 }
+variable "subnet_number" {
+  description = "The number of the subnet: 0, 1, 2, ..."
+  default     = "0"
+}
 
 variable "dns_private" { default = false }
 variable "domain_local" { default = "local" }
 variable "dns_private_name" { default = "" }
+variable "ec2_autorecover" { default = true }
