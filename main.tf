@@ -91,6 +91,7 @@ module "ec2" {
   tags                = "${var.tags}"
   user_data           = "${var.user_data}"
   protect_termination = "${var.protect_termination}"
+  associate_public_ip_address = "${var.associate_public_ip_address}"
   
 }
 

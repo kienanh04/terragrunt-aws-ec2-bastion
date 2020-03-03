@@ -28,6 +28,7 @@ variable "key_name" { default = "" }
 variable "subnet_id" { default = "" }
 variable "iam_instance_profile" { default = "" }
 variable "protect_termination" { default = true }
+variable "associate_public_ip_address" { default = false }
 variable "user_data" {
   description = "The user data to provide when launching the instance"
   default     = " "
