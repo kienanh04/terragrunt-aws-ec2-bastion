@@ -71,7 +71,7 @@ data "aws_security_groups" "ec2" {
 
 module "ec2" {
   source  = "thanhbn87/ec2-bastion/aws"
-  version = "0.1.7"
+  version = "0.1.8"
 
   ami           = "${local.ami}"
   name          = "${local.name}"
