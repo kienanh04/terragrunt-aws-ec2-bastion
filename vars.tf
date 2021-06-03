@@ -26,7 +26,7 @@ variable "volume_size" { default = "8" }
 variable "ebs_optimized" { default = true }
 variable "key_name" { default = "" }
 variable "subnet_id" { default = "" }
-variable "iam_instance_profile" { default = "" }
+##variable "iam_instance_profile" { default = "" }
 variable "protect_termination" { default = true }
 variable "associate_public_ip_address" { default = false }
 variable "user_data" {
