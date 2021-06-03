@@ -70,9 +70,9 @@ data "aws_security_groups" "ec2" {
 }
 
 module "ec2" {
-##  source  = "thanhbn87/ec2-bastion/aws"
-##  version = "0.1.9"
-  source = "git::https://github.com/kienanh04/terraform-aws-ec2-bastion.git"
+  source  = "thanhbn87/ec2-bastion/aws"
+  version = "0.1.9"
+##  source = "git::https://github.com/kienanh04/terraform-aws-ec2-bastion.git"
 
   ami           = "${local.ami}"
   name          = "${local.name}"
